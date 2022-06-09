@@ -1,0 +1,3 @@
+/nlp/scr/siyanli/icarus/icarus/full_data/
+sw4707/sw04707.wav	1
+sw4346/sw04346.wav	1

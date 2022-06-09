@@ -6,7 +6,10 @@
 import argparse
 import logging
 
-from examples.textless_nlp.gslm.speech2unit.pretrained.utils import (
+import sys
+sys.path.insert(1, "../")
+
+from pretrained.utils import (
     get_and_dump_features,
 )
 

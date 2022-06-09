@@ -10,10 +10,13 @@ import os
 import numpy as np
 
 import joblib
-from examples.textless_nlp.gslm.speech2unit.clustering.utils import (
+from utils import (
     get_audio_files,
 )
-from examples.textless_nlp.gslm.speech2unit.pretrained.utils import (
+
+import sys
+sys.path.insert(1, "../")
+from pretrained.utils import (
     get_features,
 )
 

@@ -11,34 +11,37 @@ import numpy as np
 
 import torch
 import tqdm
-from examples.textless_nlp.gslm.speech2unit.pretrained.cpc_feature_reader import (
-    CpcFeatureReader,
-)
-from examples.textless_nlp.gslm.speech2unit.pretrained.hubert_feature_reader import (
-    HubertFeatureReader,
-)
-from examples.textless_nlp.gslm.speech2unit.pretrained.logmel_feature_reader import (
-    LogMelFeatureReader,
-)
-from examples.textless_nlp.gslm.speech2unit.pretrained.w2v2_feature_reader import (
-    Wav2VecFeatureReader,
-)
+# from examples.textless_nlp.gslm.speech2unit.pretrained.cpc_feature_reader import (
+#     CpcFeatureReader,
+# )
+# from examples.textless_nlp.gslm.speech2unit.pretrained.hubert_feature_reader import (
+#     HubertFeatureReader,
+# )
+# from examples.textless_nlp.gslm.speech2unit.pretrained.logmel_feature_reader import (
+#     LogMelFeatureReader,
+# )
+# from examples.textless_nlp.gslm.speech2unit.pretrained.w2v2_feature_reader import (
+#     Wav2VecFeatureReader,
+# )
 
-from examples.textless_nlp.gslm.speech2unit.pretrained.swbd_feature_reader import (
+#import sys
+#sys.path.insert(1, "../")
+from pretrained.swbd_feature_reader import (
     SWBDWav2vecFeatureReader,
 )
 
 
 def get_feature_reader(feature_type):
-    if feature_type == "logmel":
-        return LogMelFeatureReader
-    elif feature_type == "hubert":
-        return HubertFeatureReader
-    elif feature_type == "w2v2":
-        return Wav2VecFeatureReader
-    elif feature_type == "cpc":
-        return CpcFeatureReader
-    elif feature_type == "w2v2swbd":
+    # if feature_type == "logmel":
+    #     return LogMelFeatureReader
+    # elif feature_type == "hubert":
+    #     return HubertFeatureReader
+    # elif feature_type == "w2v2":
+    #     return Wav2VecFeatureReader
+    # elif feature_type == "cpc":
+    #     return CpcFeatureReader
+    # el
+    if feature_type == "w2v2swbd":
         return SWBDWav2vecFeatureReader
     else:
         raise NotImplementedError(f"{feature_type} is not supported.")
@@ -68,6 +71,7 @@ def get_feature_iterator(
         def iterate():
             for file_path in file_path_list:
                 feats = reader.get_feats(file_path)
+                print(feats.shape, "Feats shape")
                 yield feats.cpu().numpy()
 
     return iterate, num_files

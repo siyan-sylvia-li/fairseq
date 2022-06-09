@@ -16,15 +16,17 @@ class SWBDWav2vecFeatureReader:
     Helps extract features for a given audio file.
     """
 
-    def __init__(self, mode, layer):
+    def __init__(self, checkpoint_path, layer, cuda=False):
         model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-robust-ft-swbd-300h")
         model.eval()
-        model.cuda()
+        self.cuda = cuda
+        if self.cuda:
+            model.cuda()
         model.freeze_feature_encoder()
         self.model = model
         self.feats_model = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-large-robust-ft-swbd-300h")
         self.layer = layer
-        self.mode = mode
+        self.mode = checkpoint_path
 
     def read_audio(self, fname):
         wav, sr = librosa.load(fname, sr=16000, mono=False)
@@ -34,8 +36,11 @@ class SWBDWav2vecFeatureReader:
         x = self.read_audio(file_path)
         with torch.no_grad():
             input_values = self.feats_model(x, return_tensors="pt", padding="longest", sampling_rate=16000).input_values
-            input_values = input_values.squeeze().cuda()
-            res = self.model.wav2vec2(input_values)
+            input_values = input_values.squeeze()
+            if self.cuda:
+                input_values = input_values.cuda()
+            res = self.model.wav2vec2(input_values).extract_features
+            print("Result shape", res.shape)
             if self.mode == "swbd_single":
                 random_ind = random.randint(0, 1)
                 return res[random_ind, :, :]
