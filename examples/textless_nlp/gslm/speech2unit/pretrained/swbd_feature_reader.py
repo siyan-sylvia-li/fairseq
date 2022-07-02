@@ -16,7 +16,7 @@ class SWBDWav2vecFeatureReader:
     Helps extract features for a given audio file.
     """
 
-    def __init__(self, checkpoint_path, layer, cuda=False):
+    def __init__(self, checkpoint_path, layer, cuda=True):
         model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-robust-ft-swbd-300h")
         model.eval()
         self.cuda = cuda
@@ -30,6 +30,7 @@ class SWBDWav2vecFeatureReader:
 
     def read_audio(self, fname):
         wav, sr = librosa.load(fname, sr=16000, mono=False)
+        print(wav.shape, "WAV SHAPE")
         return wav
 
     def get_feats(self, file_path):
