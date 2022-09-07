@@ -29,7 +29,9 @@ class SWBDWav2vecFeatureReader:
         self.mode = checkpoint_path
 
     def read_audio(self, fname):
-        wav, sr = librosa.load(fname, sr=16000, mono=False)
+        wav, sr = librosa.load(fname, sr=16000, mono=True)
+        if len(wav.shape) == 1:
+            wav = wav.reshape((1,) + wav.shape + (1,))
         print(wav.shape, "WAV SHAPE")
         return wav
 

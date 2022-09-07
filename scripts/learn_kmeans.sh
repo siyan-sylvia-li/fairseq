@@ -3,8 +3,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem 64G
 #SBATCH --partition jag-hi
-#SBATCH --exclude=jagupard10,jagupard11,jagupard12,jagupard13,jagupard14,jagupard15,jagupard16,jagupard17,jagupard18,jagupard19,jagupard20,jagupard21,jagupard22,jagupard23,jagupard24,jagupard25
-##SBATCH --nodelist=jagupard28
+##SBATCH --exclude=jagupard10,jagupard11,jagupard12,jagupard13,jagupard14,jagupard15,jagupard16,jagupard17,jagupard19,jagupard20,jagupard21,jagupard22,jagupard23,jagupard24,jagupard25
+#SBATCH --nodelist=jagupard18
 #SBATCH -o /u/scr/siyanli/unit_icarus/%j.out
 
 # >>> conda initialize >>>
@@ -35,7 +35,7 @@ N_CLUSTERS=500
 TYPE=w2v2swbd
 CKPT_PATH=swbd_single
 LAYER=0
-MANIFEST=/nlp/scr/siyanli/unit_icarus/test_manifest.txt
+MANIFEST=/scr/biggest/siyanli/unit_output/manifests/manifest.txt
 KM_MODEL_PATH=/nlp/scr/siyanli/unit_icarus/outputs/
 
 python3 cluster_kmeans.py \
