@@ -30,8 +30,8 @@ class SWBDWav2vecFeatureReader:
 
     def read_audio(self, fname):
         wav, sr = librosa.load(fname, sr=16000, mono=True)
-        if len(wav.shape) == 1:
-            wav = wav.reshape((1,) + wav.shape + (1,))
+        # if len(wav.shape) == 1:
+        #     wav = wav.reshape((1,) + wav.shape + (1,))
         print(wav.shape, "WAV SHAPE")
         return wav
 
@@ -39,11 +39,11 @@ class SWBDWav2vecFeatureReader:
         x = self.read_audio(file_path)
         with torch.no_grad():
             input_values = self.feats_model(x, return_tensors="pt", padding="longest", sampling_rate=16000).input_values
-            input_values = input_values.squeeze()
+            # input_values = input_values.unsqueeze(-1).squeeze(0)
             if self.cuda:
                 input_values = input_values.cuda()
+            # input_values = input_values.unsqueeze(0)
             res = self.model.wav2vec2(input_values).extract_features
-            print("Result shape", res.shape)
             if self.mode == "swbd_single":
                 random_ind = random.randint(0, 1)
                 return res[random_ind, :, :]

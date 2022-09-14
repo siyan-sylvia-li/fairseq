@@ -100,6 +100,8 @@ def get_features(
     torch.cuda.empty_cache()
 
     if flatten:
+        if feature_type == "w2v2swbd":
+            return np.squeeze(np.concatenate(features_list, axis=1), axis=0)
         return np.concatenate(features_list)
 
     return features_list

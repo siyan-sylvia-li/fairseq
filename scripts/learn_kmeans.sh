@@ -33,10 +33,10 @@ cd /nlp/scr/siyanli/unit_icarus/examples/textless_nlp/gslm/speech2unit/clusterin
 
 N_CLUSTERS=500
 TYPE=w2v2swbd
-CKPT_PATH=swbd_single
+CKPT_PATH=swbd
 LAYER=0
 MANIFEST=/scr/biggest/siyanli/unit_output/manifests/manifest.txt
-KM_MODEL_PATH=/nlp/scr/siyanli/unit_icarus/outputs/
+KM_MODEL_PATH=/nlp/scr/siyanli/unit_icarus/outputs/kmeans_model.gz
 
 python3 cluster_kmeans.py \
     --num_clusters $N_CLUSTERS \

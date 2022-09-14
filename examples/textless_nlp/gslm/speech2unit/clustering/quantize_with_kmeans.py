@@ -35,7 +35,7 @@ def get_parser():
     parser.add_argument(
         "--feature_type",
         type=str,
-        choices=["logmel", "hubert", "w2v2", "cpc"],
+        choices=["logmel", "hubert", "w2v2", "cpc", "w2v2swbd"],
         default=None,
         required=True,
         help="Acoustic feature type",
