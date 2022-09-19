@@ -100,7 +100,7 @@ def main(args, logger):
             f"Features extracted for {len(features_batch)} utterances.\n"
         )
         logger.info(
-            f"Dimensionality of representation = {features_batch[0].shape[1]}"
+            f"Dimensionality of representation = {features_batch[0].shape[-1]}"
         )
 
     # K-means model
@@ -112,9 +112,10 @@ def main(args, logger):
 
     os.makedirs(os.path.dirname(args.out_quantized_file_path), exist_ok=True)
     print(f"Writing quantized predictions to {args.out_quantized_file_path}")
-    with open(args.out_quantized_file_path, "w") as fout:
+    with open(args.out_quantized_file_path, "w+") as fout:
         for i, feats in enumerate(features_batch):
-
+            if len(feats.shape) == 3 and feats.shape[0] == 1:
+                feats = np.squeeze(feats, axis=0)
             pred = kmeans_model.predict(feats)
             pred_str = " ".join(str(p) for p in pred)
             base_fname = os.path.basename(fnames[i]).rstrip(args.extension)

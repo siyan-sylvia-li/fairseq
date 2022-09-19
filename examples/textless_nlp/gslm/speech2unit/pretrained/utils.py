@@ -71,7 +71,6 @@ def get_feature_iterator(
         def iterate():
             for file_path in file_path_list:
                 feats = reader.get_feats(file_path)
-                print(feats.shape, "Feats shape")
                 yield feats.cpu().numpy()
 
     return iterate, num_files

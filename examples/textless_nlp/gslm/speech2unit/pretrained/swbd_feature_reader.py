@@ -32,7 +32,6 @@ class SWBDWav2vecFeatureReader:
         wav, sr = librosa.load(fname, sr=16000, mono=True)
         # if len(wav.shape) == 1:
         #     wav = wav.reshape((1,) + wav.shape + (1,))
-        print(wav.shape, "WAV SHAPE")
         return wav
 
     def get_feats(self, file_path):
